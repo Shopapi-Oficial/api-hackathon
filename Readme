@@ -1,0 +1,12 @@
+# Shopapi
+Api da plataforma Shopapi
+#### Steps to run on Dev Mode
+
+  - Clone this repository
+  - Download and Install the [Hasura CLI](https://hasura.io/docs/1.0/graphql/core/hasura-cli/index.html)
+  - Run The commands:
+  - `docker-compose --env-file .env.example up -d`
+  - `cd graphql-engine`
+  - `hasura migrate apply --endpoint http://localhost:8080`
+  - `hasura metadata apply --endpoint http://localhost:8080`
+  - Now grapghql server is ready on `http://localhost:8080/v1/graphql`
