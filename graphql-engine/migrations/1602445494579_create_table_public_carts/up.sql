@@ -1,0 +1,1 @@
+CREATE TABLE "public"."carts"("id" uuid NOT NULL, "user_id" text NOT NULL, "merchant_id" uuid NOT NULL, "salesman_cod" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("merchant_id") REFERENCES "public"."merchants"("id") ON UPDATE restrict ON DELETE restrict, FOREIGN KEY ("salesman_cod") REFERENCES "public"."salesman"("cod") ON UPDATE restrict ON DELETE restrict, UNIQUE ("id"));

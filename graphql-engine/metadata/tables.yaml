@@ -1,1 +1,401 @@
-[]
+- table:
+    schema: public
+    name: cart_items
+  object_relationships:
+  - name: cart
+    using:
+      foreign_key_constraint_on: cart_id
+  - name: product
+    using:
+      foreign_key_constraint_on: product_id
+  insert_permissions:
+  - role: costumer
+    permission:
+      check: {}
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - cart_id
+      - id
+      - product_id
+      - quantity
+      - user_id
+      backend_only: false
+  select_permissions:
+  - role: costumer
+    permission:
+      columns:
+      - cart_id
+      - created_at
+      - id
+      - product_id
+      - quantity
+      - user_id
+      filter: {}
+  update_permissions:
+  - role: costumer
+    permission:
+      columns:
+      - quantity
+      filter: {}
+      check: null
+- table:
+    schema: public
+    name: carts
+  object_relationships:
+  - name: merchant
+    using:
+      foreign_key_constraint_on: merchant_id
+  - name: salesman
+    using:
+      foreign_key_constraint_on: salesman_cod
+  array_relationships:
+  - name: cart_items
+    using:
+      foreign_key_constraint_on:
+        column: cart_id
+        table:
+          schema: public
+          name: cart_items
+  insert_permissions:
+  - role: costumer
+    permission:
+      check: {}
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - id
+      - merchant_id
+      - salesman_cod
+      backend_only: false
+- table:
+    schema: public
+    name: merchant_categories
+- table:
+    schema: public
+    name: merchants
+  object_relationships:
+  - name: product_comission
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: product_comission
+        column_mapping:
+          id: merchant_id
+  array_relationships:
+  - name: carts
+    using:
+      foreign_key_constraint_on:
+        column: merchant_id
+        table:
+          schema: public
+          name: carts
+  - name: order_items
+    using:
+      foreign_key_constraint_on:
+        column: merchant_id
+        table:
+          schema: public
+          name: order_items
+  - name: orders
+    using:
+      foreign_key_constraint_on:
+        column: merchant_id
+        table:
+          schema: public
+          name: orders
+  - name: products
+    using:
+      foreign_key_constraint_on:
+        column: merchant_id
+        table:
+          schema: public
+          name: products
+  insert_permissions:
+  - role: merchant
+    permission:
+      check: {}
+      set:
+        owner_id: x-hasura-User-Id
+      columns:
+      - addressCity
+      - addressCountry
+      - addressState
+      - addressStreet
+      - category_id
+      - id
+      - name
+      - owner_id
+      backend_only: false
+  select_permissions:
+  - role: costumer
+    permission:
+      columns:
+      - addressCity
+      - addressCountry
+      - addressState
+      - addressStreet
+      - id
+      - name
+      filter:
+        owner_id:
+          _eq: X-Hasura-User-Id
+  - role: merchant
+    permission:
+      columns:
+      - addressCity
+      - addressCountry
+      - addressState
+      - addressStreet
+      - id
+      - name
+      filter:
+        owner_id:
+          _eq: X-Hasura-User-Id
+  - role: salesman
+    permission:
+      columns:
+      - addressCity
+      - addressCountry
+      - addressState
+      - addressStreet
+      - name
+      - owner_id
+      - id
+      filter: {}
+  update_permissions:
+  - role: merchant
+    permission:
+      columns:
+      - addressCity
+      - addressCountry
+      - addressState
+      - addressStreet
+      - id
+      - name
+      filter:
+        owner_id:
+          _eq: X-Hasura-User-Id
+      check:
+        owner_id:
+          _eq: X-Hasura-User-Id
+      set:
+        owner_id: x-hasura-User-Id
+- table:
+    schema: public
+    name: order_items
+  object_relationships:
+  - name: merchant
+    using:
+      foreign_key_constraint_on: merchant_id
+  - name: order
+    using:
+      foreign_key_constraint_on: order_id
+  - name: product
+    using:
+      foreign_key_constraint_on: product_id
+- table:
+    schema: public
+    name: orders
+  object_relationships:
+  - name: merchant
+    using:
+      foreign_key_constraint_on: merchant_id
+  - name: salesman
+    using:
+      foreign_key_constraint_on: salesman_code
+  array_relationships:
+  - name: order_items
+    using:
+      foreign_key_constraint_on:
+        column: order_id
+        table:
+          schema: public
+          name: order_items
+- table:
+    schema: public
+    name: product_comission
+  object_relationships:
+  - name: merchant
+    using:
+      foreign_key_constraint_on: merchant_id
+  - name: product
+    using:
+      foreign_key_constraint_on: product_id
+  insert_permissions:
+  - role: merchant
+    permission:
+      check: {}
+      columns:
+      - product_id
+      - merchant_id
+      - comission_multiply
+      - comission_amount
+      backend_only: false
+  select_permissions:
+  - role: merchant
+    permission:
+      columns:
+      - comission_amount
+      - comission_multiply
+      - merchant_id
+      - product_id
+      filter: {}
+  update_permissions:
+  - role: merchant
+    permission:
+      columns:
+      - comission_amount
+      - comission_multiply
+      - merchant_id
+      - product_id
+      filter: {}
+      check: null
+  delete_permissions:
+  - role: merchant
+    permission:
+      filter: {}
+- table:
+    schema: public
+    name: products
+  object_relationships:
+  - name: merchant
+    using:
+      foreign_key_constraint_on: merchant_id
+  - name: product_comission
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: product_comission
+        column_mapping:
+          id: product_id
+  array_relationships:
+  - name: cart_items
+    using:
+      foreign_key_constraint_on:
+        column: product_id
+        table:
+          schema: public
+          name: cart_items
+  - name: order_items
+    using:
+      foreign_key_constraint_on:
+        column: product_id
+        table:
+          schema: public
+          name: order_items
+  insert_permissions:
+  - role: merchant
+    permission:
+      check:
+        _exists:
+          _where:
+            owner_id:
+              _eq: X-Hasura-User-Id
+          _table:
+            schema: public
+            name: merchants
+      columns:
+      - id
+      - merchant_id
+      - name
+      - price
+      - stock
+      backend_only: false
+  select_permissions:
+  - role: costumer
+    permission:
+      columns:
+      - id
+      - merchant_id
+      - name
+      - price
+      - stock
+      - created_at
+      - updated_at
+      filter: {}
+  - role: merchant
+    permission:
+      columns:
+      - created_at
+      - id
+      - name
+      - price
+      - stock
+      - updated_at
+      filter:
+        _and:
+        - _exists:
+            _where:
+              _and:
+              - owner_id:
+                  _eq: X-Hasura-User-id
+            _table:
+              schema: public
+              name: merchants
+  - role: salesman
+    permission:
+      columns:
+      - created_at
+      - id
+      - merchant_id
+      - name
+      - price
+      - stock
+      - updated_at
+      filter: {}
+  update_permissions:
+  - role: merchant
+    permission:
+      columns:
+      - created_at
+      - name
+      - price
+      - stock
+      - updated_at
+      filter:
+        _and:
+        - _exists:
+            _where:
+              _and:
+              - owner_id:
+                  _eq: X-Hasura-User-id
+            _table:
+              schema: public
+              name: merchants
+      check: null
+- table:
+    schema: public
+    name: salesman
+  array_relationships:
+  - name: carts
+    using:
+      foreign_key_constraint_on:
+        column: salesman_cod
+        table:
+          schema: public
+          name: carts
+  - name: orders
+    using:
+      foreign_key_constraint_on:
+        column: salesman_code
+        table:
+          schema: public
+          name: orders
+  insert_permissions:
+  - role: costumer
+    permission:
+      check: {}
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - cod
+      backend_only: false
+  select_permissions:
+  - role: salesman
+    permission:
+      columns:
+      - cod
+      filter: {}

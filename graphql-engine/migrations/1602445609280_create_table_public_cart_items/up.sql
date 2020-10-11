@@ -1,0 +1,1 @@
+CREATE TABLE "public"."cart_items"("id" uuid NOT NULL, "cart_id" uuid NOT NULL, "product_id" uuid NOT NULL, "user_id" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("cart_id") REFERENCES "public"."carts"("id") ON UPDATE cascade ON DELETE restrict, FOREIGN KEY ("product_id") REFERENCES "public"."products"("id") ON UPDATE cascade ON DELETE restrict, UNIQUE ("id"));

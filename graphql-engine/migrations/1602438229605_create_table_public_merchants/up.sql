@@ -1,0 +1,1 @@
+CREATE TABLE "public"."merchants"("id" uuid NOT NULL, "addressCountry" text NOT NULL, "addressState" text NOT NULL, "addressCity" text NOT NULL, "addressStreet" text NOT NULL, "name" text NOT NULL, "owner_id" uuid NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"));
