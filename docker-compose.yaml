@@ -1,0 +1,34 @@
+version: "3.3"
+
+services:
+  #-------- Postgress-------- #
+  postgres:
+    image: postgres:12
+    container_name: getnet_postgres
+    volumes:
+      - getnet_posgtress_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    ports:
+      - 5432:${POSTGRES_PORT}
+
+  #-------- Graphql Engine -------- #
+  graphql:
+    image: hasura/graphql-engine:v1.3.2
+    container_name: getnet-graphql-engine
+    depends_on:
+      - "postgres"
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: ${HASURA_GRAPHQL_DATABASE_URL}
+      HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE}
+      HASURA_GRAPHQL_DEV_MODE: ${HASURA_GRAPHQL_DEV_MODE}
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
+
+volumes:
+  getnet_posgtress_data: {}
