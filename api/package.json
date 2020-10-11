@@ -1,0 +1,14 @@
+{
+  "name": "@genet-22/api",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": "true",
+  "author": {
+    "email": "lucas@codeall.com.br",
+    "name": "lucas Cardial"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
+}
