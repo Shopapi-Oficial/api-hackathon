@@ -1,6 +1,8 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
+import dotenv from 'dotenv'
+
 import salesmanRoutes from './routes/salesman'
 import pool from './config/dbconfig'
 import { ServerToServerAuthentication } from './middleware/ssa'
@@ -13,6 +15,7 @@ class Server {
     this.config()
     this.routerConfig()
     this.dbConnect()
+    dotenv.config()
   }
 
   private config (): void {
