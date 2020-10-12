@@ -1,7 +1,7 @@
 {
   "name": "@genet-22/api",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "dist/api/app.js",
   "license": "MIT",
   "private": "true",
   "author": {
@@ -9,6 +9,8 @@
     "name": "lucas Cardial"
   },
   "scripts": {
+    "dev": "ts-node --project ./tsconfig.json api/app.ts --watch",
+    "start": "tsc && node dist/api/app.js",
     "test": "jest --passWithNoTests",
     "test:staged": "jest --passWithNoTests"
   },
