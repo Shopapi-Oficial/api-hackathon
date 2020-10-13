@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  #-------- Postgress-------- #
+  #-- POSTGRES --------------------------
   postgres:
     image: postgres:12
     container_name: getnet_postgres
@@ -15,7 +15,20 @@ services:
     ports:
       - 5432:${POSTGRES_PORT}
 
-  #-------- Graphql Engine -------- #
+  #-- API --------------------------
+  action_server:
+    container_name: shopapi_api
+    build:
+      context: .
+      dockerfile: api.develop.dockerfile
+    expose:
+      - 3000
+    environment:
+      API_PORT: ${API_PORT}
+      GRAPHQL_SERVER_ACTION_SECRET: ${GRAPHQL_SERVER_ACTION_SECRET}
+      API_DB_CONNECTION_STRING: ${API_DB_CONNECTION_STRING}
+
+  #-- GRAPHQL ENGINE --------------------------
   graphql:
     image: hasura/graphql-engine:v1.3.2
     container_name: getnet-graphql-engine
@@ -29,6 +42,7 @@ services:
       HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE}
       HASURA_GRAPHQL_DEV_MODE: ${HASURA_GRAPHQL_DEV_MODE}
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES}
+      GRAPHQL_SERVER_ACTION_SECRET: ${GRAPHQL_SERVER_ACTION_SECRET}
 
 volumes:
   getnet_posgtress_data: {}

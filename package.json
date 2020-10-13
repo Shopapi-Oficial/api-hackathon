@@ -9,7 +9,8 @@
     "name": "lucas Cardial"
   },
   "scripts": {
-    "dev": "ts-node --project ./tsconfig.json api/app.ts --watch",
+    "build": "tsc -b",
+    "server": "node app.js",
     "start": "tsc && node dist/api/app.js",
     "test": "jest --passWithNoTests",
     "test:staged": "jest --passWithNoTests"
