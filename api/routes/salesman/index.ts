@@ -4,9 +4,11 @@ import { generateSalesmanCodeHandler } from '../../controllers/salesman/create-s
 const router = Router()
 
 router.post('/salesman', async (req: Request, res: Response) => {
-  const params: generateSalesmanCodeArgs = req.body.input
-  const data = await generateSalesmanCodeHandler(params)
-  return res.json(data.salesman_cod)
+  const session = req.body.session_variables
+  const data = await generateSalesmanCodeHandler(session)
+  console.log({ data })
+
+  return res.json(data)
 })
 
 export default router

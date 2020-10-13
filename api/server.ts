@@ -26,7 +26,6 @@ class Server {
   private dbConnect (): void {
     pool.connect(function (err, client, done) {
       if (err) throw new Error(err.message)
-      console.log('Connected')
     })
   }
 

@@ -1,6 +1,6 @@
 import Server from './server'
 
-const port = parseInt(process.env.PORT || '3000')
+const port = parseInt(process.env.API_PORT || '3000')
 
 const starter = new Server().start(port)
   .then((port: string) => console.log(`Running on port ${port}`))
