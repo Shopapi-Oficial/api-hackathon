@@ -1,6 +1,17 @@
-actions: []
+actions:
+- name: generateSalesmanCode
+  definition:
+    kind: synchronous
+    handler: http://action_server:3000/salesman
+    headers:
+    - name: x-server-secret
+      value_from_env: GRAPHQL_SERVER_ACTION_SECRET
+  permissions:
+  - role: salesman
 custom_types:
   enums: []
-  input_objects: []
-  objects: []
+  input_objects:
+  - name: GenerateSalesmanCodeInput
+  objects:
+  - name: GenerateSalesmanCodeOutput
   scalars: []

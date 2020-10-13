@@ -1,2 +1,17 @@
+type Mutation {
+  generateSalesmanCode (
+    arg1: GenerateSalesmanCodeInput!
+  ): GenerateSalesmanCodeOutput
+}
 
+
+
+
+input GenerateSalesmanCodeInput {
+  userId : String!
+}
+
+type GenerateSalesmanCodeOutput {
+  salesman_cod : Int!
+}
 

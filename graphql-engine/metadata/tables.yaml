@@ -75,6 +75,9 @@
     schema: public
     name: merchants
   object_relationships:
+  - name: merchant_category
+    using:
+      foreign_key_constraint_on: category_id
   - name: product_comission
     using:
       manual_configuration:
@@ -202,9 +205,6 @@
   - name: merchant
     using:
       foreign_key_constraint_on: merchant_id
-  - name: salesman
-    using:
-      foreign_key_constraint_on: salesman_code
   array_relationships:
   - name: order_items
     using:
